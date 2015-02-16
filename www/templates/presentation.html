@@ -1,5 +1,32 @@
-<ion-view>
+<ion-view view-title="{{session.title}}">
   <ion-content>
-    <h1>presentation</h1>
+    <!-- <pre>{{session | json}}</pre> -->
+
+    <ion-list>
+      <div class="list card">
+        <div class="item item-avatar">
+          <img src="https://www.devnexus.com/s/speakers/{{session.speakers[0].id}}.jpg">
+          <h2>{{session.speakers[0].firstName}} {{session.speakers[0].lastName}}</h2>
+        </div>
+        <div class="item item-body">
+
+          <h2>
+            {{session.description}}
+          </h2>
+          <p>
+            Track: {{session.presentationType}}
+          </p>
+          <p>
+            Skill Level: {{session.skillLevel}}
+          </p>
+        </div>
+
+        <div class="item tabs tabs-secondary tabs-icon-left">
+          <a class="tab-item" href="#">
+            <i class="icon ion-share"></i> Share
+          </a>
+        </div>
+      </div>
+    </ion-list>
   </ion-content>
 </ion-view>

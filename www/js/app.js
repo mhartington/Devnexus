@@ -2,8 +2,6 @@ angular.module('starter', ['ionic'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
-    // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
-    // for form inputs)
     if (window.cordova && window.cordova.plugins.Keyboard) {
       cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
     }
@@ -11,6 +9,21 @@ angular.module('starter', ['ionic'])
       StatusBar.styleDefault();
     }
   });
+})
+
+.factory('sessions', function($http, $q) {
+  var sessions = {};
+  sessions.list = [];
+  sessions.all = function() {
+    return $http.get('https://devnexus.com/s/presentations.json')
+      .then(function(response) {
+        sessions.list.push(response.data.presentationList.presentation);
+      });
+  };
+  sessions.ready = $q.all([
+    sessions.all()
+  ]);
+  return sessions;
 })
 
 .config(function($stateProvider, $urlRouterProvider) {
@@ -23,46 +36,27 @@ angular.module('starter', ['ionic'])
     .state('session', {
       url: '/sessions/:index',
       controller: 'SessionCtrl',
-        templateUrl: 'templates/presentation.html',
-        resolve: {
-          session: function($stateParams, sessions) {
-            return sessions.ready.then(function() {
-              return sessions.list[+$stateParams.index];
-            });
-          }
-        }
+      templateUrl: 'templates/presentation.html'
     });
   $urlRouterProvider.otherwise('/sessions');
 })
 
-.factory('Sessions', function($http, $q) {
-  var sessions = {};
-  sessions.list = [];
-  sessions.add = function() {
-    return $http.get("https://devnexus.com/s/presentations.json")
-      .then(function(response) {
-        sessions.list.push(response.data.presentationList.presentation);
-        console.log(response.data.presentationList.presentation)
-      });
-  };
-  sessions.ready = $q.all([
-    sessions.add()
-  ]);
-  return sessions;
-})
 
-
-.controller('SessionsCtrl', function($scope, Sessions, $ionicLoading) {
-  $scope.sessions = Sessions.list;
+.controller('SessionsCtrl', function($scope, sessions, $ionicLoading) {
   $ionicLoading.show({
-    template: '<ion-spinner class="spinner-light"></ion-spinner>',
-    noBackdrop: true
+    template: '<ion-spinner class="spinner-light"></ion-spinner>'
   });
-  Sessions.ready.then(function() {
+
+  $scope.sessions = sessions.list;
+
+  sessions.ready.then(function() {
     $ionicLoading.hide();
   });
+
+
+
 })
 
-.controller('SessionCtrl', function($scope, session, Session, $ionicHistory) {
-  $scope.session = session;
+.controller('SessionCtrl', function($scope, Sessions, $stateParams) {
+  //  $scope.session = Sessions.get($stateParams.index);
 });

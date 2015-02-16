@@ -1,12 +1,12 @@
 <ion-view view-title="Sessions">
   <ion-content>
-    <ion-list>
-      <ion-item ng-repeat="session in sessions[0]" ng-href="#/sessions/{{$index}}">
-        <h2>{{$index}} ) {{session.title}}</h2>
+    <div>{{sessions}}</div>
+  <!--   <ion-list>
+    <ion-item ng-repeat="session in sessions | filter:sessionSearch" ng-href="#/sessions/{{\$index}}">
+      <h2>{{session.title}}</h2>
 
-        <p>{{session.speakers[0].firstName}} {{session.speakers[0].lastName}}</p>
-      </ion-item>
-    </ion-list>
-
+      <p>{{session.speakers[0].firstName}} {{session.speakers[0].lastName}}</p>
+    </ion-item>
+  </ion-list> -->
   </ion-content>
 </ion-view>
