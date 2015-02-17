@@ -1,4 +1,4 @@
-angular.module('starter', ['ionic'])
+angular.module('starter', ['ionic', 'ngCordova'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -17,12 +17,13 @@ angular.module('starter', ['ionic'])
   sessions.all = function() {
     return $http.get('https://devnexus.com/s/presentations.json')
       .then(function(response) {
-        sessions.list.push(response.data.presentationList.presentation);
+        var rawData = response.data.presentationList.presentation;
+        for (i = 0; i < rawData.length; i++) {
+          sessions.list.push(rawData[i]);
+        }
       });
   };
-  sessions.ready = $q.all([
-    sessions.all()
-  ]);
+  sessions.ready = $q.when(sessions.all());
   return sessions;
 })
 
@@ -36,27 +37,98 @@ angular.module('starter', ['ionic'])
     .state('session', {
       url: '/sessions/:index',
       controller: 'SessionCtrl',
-      templateUrl: 'templates/presentation.html'
+      templateUrl: 'templates/presentation.html',
+      resolve: {
+        session: function($stateParams, sessions) {
+          return sessions.ready.then(function() {
+            return sessions.list[+$stateParams.index];
+          });
+        }
+      }
     });
   $urlRouterProvider.otherwise('/sessions');
 })
-
 
 .controller('SessionsCtrl', function($scope, sessions, $ionicLoading) {
   $ionicLoading.show({
     template: '<ion-spinner class="spinner-light"></ion-spinner>'
   });
-
   $scope.sessions = sessions.list;
-
   sessions.ready.then(function() {
     $ionicLoading.hide();
   });
+})
+
+.controller('SessionCtrl', function($scope, session, $cordovaSocialSharing, $cordovaCamera) {
+  $scope.session = session;
+
+  $scope.share = function(session) {
+    // Message var that grabs the session title and speaker info
+    var message = "Attending " + session.title + " by " + session.speakers[0].firstName + " " + session.speakers[0].lastName + ". #DevNexus2015";
+
+    //Lets call the camper api
+    $cordovaCamera.getPicture().then(function(imageURI) {
+      //create a photo var that will grab the image data
+      //from the imageURI create by camera plugin
+      var photo = imageURI;
+      //Lets share that via social sharing plugin
+      $cordovaSocialSharing
+      //Share via twitter, and pass in the message & photo
+        .shareViaTwitter(message, photo)
+        .then(function(result) {
+          // Success!
+          console.log("Success!");
+          //Write to console if everything worked
+        }, function(err) {
+          //If for some reason the app doesn work,
+          //Show an alert to inform the user
+          alert("Ruh-roh, looks like something went wrong :(");
+        });
+      //End Social sharing code
+
+    }, function(err) {
+      //If there's an error with the camera, lets log that error
+      console.log(err);
+    }, {
+      // Variables that we pass into the camera api
+      quality: 75,
+      targetWidth: 320,
+      targetHeight: 320,
+      saveToPhotoAlbum: false
+    });
+  };
+
 
 
 
 })
 
-.controller('SessionCtrl', function($scope, Sessions, $stateParams) {
-  //  $scope.session = Sessions.get($stateParams.index);
-});
+.controller('MainCtrl', function($scope, $cordovaCamera, $cordovaSocialSharing) {
+  var photo = $scope.lastPhoto;
+
+  $scope.getPhoto = function() {
+
+    $cordovaCamera.getPicture().then(function(imageURI) {
+
+      console.log(imageURI);
+
+      photo = imageURI;
+
+      $cordovaSocialSharing
+        .shareViaTwitter("", photo)
+        .then(function(result) { /* Success! */ },
+          function(err) {
+            alert("Ruh-roh");
+          });
+
+
+    }, function(err) {
+      console.err(err);
+    }, {
+      quality: 75,
+      targetWidth: 320,
+      targetHeight: 320,
+      saveToPhotoAlbum: false
+    });
+  };
+})
