@@ -11,13 +11,14 @@ angular.module('starter', ['ionic', 'ngCordova'])
   });
 })
 
-.factory('sessions', function($http, $q) {
+.factory('sessions', function($http, $q, $stateParams) {
   var sessions = {};
   sessions.list = [];
+
   sessions.all = function() {
     return $http.get('https://devnexus.com/s/presentations.json')
       .then(function(response) {
-        var rawData = response.data.presentationList.presentation;
+        var rawData = response.data.presentationList.presentation
         for (i = 0; i < rawData.length; i++) {
           sessions.list.push(rawData[i]);
         }
@@ -25,6 +26,17 @@ angular.module('starter', ['ionic', 'ngCordova'])
   };
   sessions.ready = $q.when(sessions.all());
   return sessions;
+})
+
+
+
+.service('session', function(sessions, $stateParams){
+  session.byId = function(id) {
+    for (var i = 0; i < sessions.length; i++) {
+      if (sessions[i].id === id) return sessions[i];
+    }
+  };
+  return sessions.byId($stateParams.sessionId);
 })
 
 .config(function($stateProvider, $urlRouterProvider) {
@@ -35,16 +47,9 @@ angular.module('starter', ['ionic', 'ngCordova'])
       controller: 'SessionsCtrl'
     })
     .state('session', {
-      url: '/sessions/:index',
+      url: '/sessions/:sessionId',
       controller: 'SessionCtrl',
-      templateUrl: 'templates/presentation.html',
-      resolve: {
-        session: function($stateParams, sessions) {
-          return sessions.ready.then(function() {
-            return sessions.list[+$stateParams.index];
-          });
-        }
-      }
+      templateUrl: 'templates/session.html'
     });
   $urlRouterProvider.otherwise('/sessions');
 })
@@ -53,14 +58,22 @@ angular.module('starter', ['ionic', 'ngCordova'])
   $ionicLoading.show({
     template: '<ion-spinner class="spinner-light"></ion-spinner>'
   });
-  $scope.sessions = sessions.list;
+
   sessions.ready.then(function() {
     $ionicLoading.hide();
-  });
+    console.log(sessions.list[1].id);
+});
+
+  $scope.sessions = sessions.list;
+
 })
 
-.controller('SessionCtrl', function($scope, session, $cordovaSocialSharing, $cordovaCamera) {
-  $scope.session = session;
+.controller('SessionCtrl', function($scope, session, $stateParams, $cordovaSocialSharing, $cordovaCamera) {
+  sessions.ready.then(function() {
+    $scope.session = session.byId[$stateParams.sessionId];
+
+  });
+
 
   $scope.share = function(session) {
     // Message var that grabs the session title and speaker info

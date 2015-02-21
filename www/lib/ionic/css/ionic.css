@@ -2,7 +2,7 @@
  * Copyright 2014 Drifty Co.
  * http://drifty.com/
  *
- * Ionic, v1.0.0-beta.14-nightly-1042
+ * Ionic, v1.0.0-beta.14-nightly-1060
  * A powerful HTML5 mobile app framework.
  * http://ionicframework.com/
  *
@@ -2595,9 +2595,6 @@ body.grade-b, body.grade-c {
   display: block;
   overflow: hidden;
   margin-top: -1px; }
-
-body:not(.platform-webview) .scroll-content::-webkit-scrollbar {
-  display: none; }
 
 /**
  * Scroll is the scroll view component available for complex and custom
@@ -6927,6 +6924,11 @@ a.button {
   -moz-flex-wrap: wrap;
   -ms-flex-wrap: wrap;
   flex-wrap: wrap; }
+
+.row-no-padding {
+  padding: 0; }
+  .row-no-padding > .col {
+    padding: 0; }
 
 .row + .row {
   margin-top: -5px;
