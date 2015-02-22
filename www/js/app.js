@@ -50,8 +50,13 @@ angular.module('starter', ['ionic', 'ngCordova'])
 })
 
 .controller('SessionsCtrl', function($scope, Sessions, $ionicLoading) {
+  $ionicLoading.show({
+  template: '<ion-spinner class="spinner-light"></ion-spinner>'
+});
+
    Sessions.all().then(function(data){
-     $scope.sessions = data
+     $scope.sessions = data;
+     $ionicLoading.hide();
    });
 })
 

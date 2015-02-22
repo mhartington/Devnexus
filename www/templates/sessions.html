@@ -9,14 +9,9 @@
 
 
   <ion-content>
-
-<!--     <div ng-repeat="session in sessions">
- <a ng-href="#/sessions/{{session.id}}">{{session.id}}</a>
-</div> -->
     <ion-list>
-        <ion-item ng-repeat="session in sessions | filter:searchSessions" ng-href="#/sessions/{{session.id}}">
+      <ion-item ng-repeat="session in sessions | filter:searchSessions" ng-href="#/sessions/{{session.id}}">
         <h2>{{session.title}}</h2>
-        <p>{{session.id}}</p>
         <p ng-repeat="speaker in session.speakers">{{speaker.firstName}} {{speaker.lastName}}</p>
       </ion-item>
     </ion-list>
