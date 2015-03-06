@@ -270,5 +270,19 @@
 [collection-repeat] {
   /* Position is set by transforms */
   left: 0 !important;
+  top: 0 !important;
   position: absolute !important;
+  z-index: 1;
+}
+.collection-repeat-container {
+  position: relative;
+}
+.collection-repeat-after-container {
+  z-index: 0;
+  display: block;
+
+  /* when scrolling horizontally, make sure the after container doesn't take up 100% width */
+  &.horizontal {
+    display: inline-block;
+  }
 }

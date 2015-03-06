@@ -19,6 +19,7 @@
     "com.ionic.keyboard",
     "org.apache.cordova.console",
     "org.apache.cordova.device",
-    "org.apache.cordova.camera"
+    "org.apache.cordova.camera",
+    "https://github.com/apache/cordova-plugin-statusbar.git"
   ]
 }
