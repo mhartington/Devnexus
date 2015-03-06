@@ -13,7 +13,7 @@
 
   <ion-content>
     <ion-list>
-      <ion-item collection-repeat="session in sessions | filter:searchSessions" ng-href="#/sessions/{{session.id}}">
+      <ion-item collection-repeat="session in sessions | filter:searchSessions" ui-sref="menu.session({sessionId:session.id})">
         <h2>{{session.title}}</h2>
         <p ng-repeat="speaker in session.speakers">{{speaker.firstName}} {{speaker.lastName}}</p>
       </ion-item>
