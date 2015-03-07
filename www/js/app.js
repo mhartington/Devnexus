@@ -1,6 +1,6 @@
 angular.module('devnexus', ['ionic', 'ngCordova', 'devnexus.factory', 'devnexus.controllers'])
 
-.run(function($ionicPlatform) {
+.run(function($ionicPlatform, $timeout) {
   // This is an ionic wrapper for cordova's
   // device ready event.
   $ionicPlatform.ready(function() {
@@ -18,6 +18,9 @@ angular.module('devnexus', ['ionic', 'ngCordova', 'devnexus.factory', 'devnexus.
         StatusBar.styleLightContent();
       }
     }
+    $timeout(function(){
+      navigator.splashscreen.hide();
+    }, 1000)
   });
 })
 
@@ -80,5 +83,5 @@ angular.module('devnexus', ['ionic', 'ngCordova', 'devnexus.factory', 'devnexus.
     }
   });
  
-  $urlRouterProvider.otherwise('/menu/speakers');
+  $urlRouterProvider.otherwise('/menu/sessions');
 });

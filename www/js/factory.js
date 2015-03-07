@@ -8,11 +8,20 @@ angular.module('devnexus.factory', [])
       //will make an http get request
       //return the data, and make that data the value of sessions array
       all: function() {
-        return $http.get("https://devnexus.com/s/presentations.json")
-          .then(function(responce) {
-            sessions = responce.data.presentationList.presentation;
-            return sessions;
-          });
+        // Lets cache the data
+        if (!winddow.localStorage.localSessions) {
+          ///Lets fetch data
+          return $http.get("https://devnexus.com/s/presentations.json")
+            .then(function(responce) {
+              sessions = responce.data.presentationList.presentation;
+              window.localStorage.localSessions = sessions;
+              return sessions;
+            });
+        } else {
+          ///lets set sessions to local storage
+          sessions = window.localStorage.localSessions;
+          return sessions;
+        }
       },
       //Session.get
       //Loop though all the objects in sessions
@@ -36,7 +45,7 @@ angular.module('devnexus.factory', [])
     all: function() {
       return $http.get('https://devnexus.com/s/speakers.json')
         .then(function(responce) {
-          console.log(responce);  
+          console.log(responce);
           speakers = responce.data.speakerList.speaker;
           return speakers;
         });
