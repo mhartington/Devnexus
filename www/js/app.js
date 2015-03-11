@@ -1,6 +1,15 @@
-angular.module('devnexus', ['ionic', 'ngCordova', 'devnexus.factory', 'devnexus.controllers'])
+angular.module('devnexus', [
+  'ionic',
+  'ngCordova',
+  'devnexus.factory',
+  'devnexus.controllers',
+  'uiGmapgoogle-maps'
+])
 
-.run(function($ionicPlatform, $timeout) {
+.run(function($ionicPlatform, $timeout, $templateCache) {
+
+  $templateCache.put('searchbox.tpl.html', '<input id="pac-input" class="" type="text" ng-model="ngModel" placeholder="Search">');
+  $templateCache.put('window.tpl.html', '<div class="map-info" ng-controller="WindowCtrl" ng-init="showPlaceDetails(parameter)">{{place.name}}</div>');
   // This is an ionic wrapper for cordova's
   // device ready event.
   $ionicPlatform.ready(function() {
@@ -18,14 +27,19 @@ angular.module('devnexus', ['ionic', 'ngCordova', 'devnexus.factory', 'devnexus.
         StatusBar.styleLightContent();
       }
     }
-    $timeout(function(){
+    $timeout(function() {
       navigator.splashscreen.hide();
-    }, 1000)
+    }, 500);
   });
 })
 
 
-.config(function($stateProvider, $urlRouterProvider) {
+.config(function($stateProvider, $urlRouterProvider, uiGmapGoogleMapApiProvider) {
+  uiGmapGoogleMapApiProvider.configure({
+    v: '3.17',
+    libraries: 'places'
+  });
+
   $stateProvider
 
     .state('menu', {
@@ -54,7 +68,7 @@ angular.module('devnexus', ['ionic', 'ngCordova', 'devnexus.factory', 'devnexus.
     }
   })
 
-    .state('menu.speakers', {
+  .state('menu.speakers', {
     url: '/speakers',
     views: {
       'menuContent': {
@@ -79,9 +93,10 @@ angular.module('devnexus', ['ionic', 'ngCordova', 'devnexus.factory', 'devnexus.
     views: {
       'menuContent': {
         templateUrl: 'templates/map.html',
+        controller: 'MapCtrl'
       }
     }
   });
- 
+
   $urlRouterProvider.otherwise('/menu/sessions');
 });

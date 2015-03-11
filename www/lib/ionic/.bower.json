@@ -1,6 +1,6 @@
 {
   "name": "ionic",
-  "codename": "magnesium-mongoose",
+  "codename": "neodymium-newt",
   "homepage": "https://github.com/driftyco/ionic",
   "authors": [
     "Max Lynch <max@drifty.com>",
@@ -33,11 +33,11 @@
     "angular-sanitize": "1.3.6",
     "angular-ui-router": "0.2.13"
   },
-  "_release": "04717ca083",
+  "_release": "36d559b4ef",
   "_resolution": {
     "type": "branch",
     "branch": "master",
-    "commit": "04717ca0830eabe14980c8d89142444035216d23"
+    "commit": "36d559b4efe95f767c1fcadeff3b5bc488955b20"
   },
   "_source": "git://github.com/driftyco/ionic-bower.git",
   "_target": "master",

@@ -1,17 +1,19 @@
 <ion-view view-title="Sessions">
 
-  <ion-header-bar class="bar-subheader item-input-inset">
-    <label class="item-input-wrapper">
-      <i class="icon ion-ios-search placeholder-icon"></i>
-      <input type="search" placeholder="Search" 
-             ng-model="searchSessions" 
-             ng-change="scrollTop(); resize()"
-             ng-focus="inputUp()" ng-blur="inputDown()">
-    </label>
-      <button ng-if="searchSessions.length" ng-click="clearSearch()" class="button button-icon ion-ios-close-empty"></button>
-  </ion-header-bar>
+  <form novalidate ng-submit="doSearch()">
+    <ion-header-bar class="bar-subheader item-input-inset bar-balanced">
+      <label class="item-input-wrapper">
+        <i class="icon ion-ios-search placeholder-icon"></i>
+        <input type="text" placeholder="Search" ng-model="searchSessions" ng-change="scrollTop(); resize()"
+        ng-focus="inputUp()" ng-blur="inputDown()">
+      </label>
+      <a ng-if="searchSessions.length" ng-click="clearSearch()" class="button button-icon ion-ios-close-empty"></a>
+    </ion-header-bar>
+  </form>
+  
 
   <ion-content>
+      <button ng-if="hasError" class="button-block button button-balanced" ng-click="load()">Try Again</button>
     <ion-list>
       <ion-item collection-repeat="session in sessions | filter:searchSessions" ui-sref="menu.session({sessionId:session.id})">
         <h2>{{session.title}}</h2>

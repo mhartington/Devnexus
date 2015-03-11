@@ -1,27 +1,20 @@
+// Lets create a module that we can inject into our app.js
 angular.module('devnexus.factory', [])
+  // Then lets create a factory and inject  the $http service
   .factory('Sessions', function($http) {
     // create an empty array
     var sessions = [];
-
     return {
-      //Sessions.all()
+      //Sessions.all
       //will make an http get request
       //return the data, and make that data the value of sessions array
       all: function() {
-        // Lets cache the data
-        if (!winddow.localStorage.localSessions) {
-          ///Lets fetch data
-          return $http.get("https://devnexus.com/s/presentations.json")
-            .then(function(responce) {
-              sessions = responce.data.presentationList.presentation;
-              window.localStorage.localSessions = sessions;
-              return sessions;
-            });
-        } else {
-          ///lets set sessions to local storage
-          sessions = window.localStorage.localSessions;
-          return sessions;
-        }
+        ///Lets fetch data
+        return $http.get('https://devnexus.com/s/presentations.json')
+          .then(function(responce) {
+            sessions = responce.data.presentationList.presentation;
+            return sessions;
+          });
       },
       //Session.get
       //Loop though all the objects in sessions
@@ -36,7 +29,10 @@ angular.module('devnexus.factory', [])
       }
     };
   })
+  // From here, we can impliment some form of caching.
+  // Angular Cache Factory is a good module with lots of options
 
+//Essentially repeating everything from above, but for speakers
 .factory('Speakers', function($http) {
   // create an empty array
   var speakers = [];
@@ -45,7 +41,6 @@ angular.module('devnexus.factory', [])
     all: function() {
       return $http.get('https://devnexus.com/s/speakers.json')
         .then(function(responce) {
-          console.log(responce);
           speakers = responce.data.speakerList.speaker;
           return speakers;
         });

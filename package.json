@@ -21,6 +21,7 @@
     "org.apache.cordova.device",
     "org.apache.cordova.camera",
     "https://github.com/apache/cordova-plugin-statusbar.git",
-    "org.apache.cordova.splashscreen"
+    "org.apache.cordova.splashscreen",
+    "org.apache.cordova.dialogs"
   ]
 }

@@ -21,3 +21,20 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 // Include all of Ionic
 @import "www/lib/ionic/scss/ionic";
 
+.angular-google-map-container {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.pac-container {
+    display: none;
+}
+
+.map-info{
+	z-index: 12;
+
+
+}
