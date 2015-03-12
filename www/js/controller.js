@@ -202,13 +202,13 @@ $scope.doSearch = function() {
       visible: false
 
     },
-    templateurl: 'window.tpl.html',
+    templateurl: 'templates/window.html',
     templateparameter: {}
   };
 
 
   $scope.searchbox = {
-    template: 'searchbox.tpl.html',
+    template: 'templates/searchbox.html',
     options: {
       bounds: {}
     },
@@ -235,7 +235,7 @@ $scope.doSearch = function() {
             options: {
               visible: false
             },
-            templateurl: 'window.tpl.html',
+            templateurl: 'templates/window.html',
             templateparameter: place
           };
           newMarkers.push(marker);

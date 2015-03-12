@@ -6,10 +6,7 @@ angular.module('devnexus', [
   'uiGmapgoogle-maps'
 ])
 
-.run(function($ionicPlatform, $timeout, $templateCache) {
-
-  $templateCache.put('searchbox.tpl.html', '<input id="pac-input" class="" type="text" ng-model="ngModel" placeholder="Search">');
-  $templateCache.put('window.tpl.html', '<div class="map-info" ng-controller="WindowCtrl" ng-init="showPlaceDetails(parameter)">{{place.name}}</div>');
+.run(function($ionicPlatform, $timeout) {
   // This is an ionic wrapper for cordova's
   // device ready event.
   $ionicPlatform.ready(function() {
@@ -22,7 +19,7 @@ angular.module('devnexus', [
     }
     if (window.StatusBar) {
       if (ionic.Platform.isAndroid()) {
-        StatusBar.backgroundColorByHexString("#28a54c");
+        StatusBar.backgroundColorByHexString("#608628");
       } else {
         StatusBar.styleLightContent();
       }
