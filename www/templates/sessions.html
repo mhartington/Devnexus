@@ -13,7 +13,7 @@
   
 
   <ion-content>
-      <button ng-if="hasError" class="button-block button button-balanced" ng-click="load()">Try Again</button>
+      <button ng-if="hasError" class="button-clear button-full button button-balanced" ng-click="load()">Try Again</button>
     <ion-list>
       <ion-item collection-repeat="session in sessions | filter:searchSessions" ui-sref="menu.session({sessionId:session.id})">
         <h2>{{session.title}}</h2>

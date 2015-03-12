@@ -12,7 +12,7 @@
   </form>
 
   <ion-content>
-      <button ng-if="hasError" class="button-block button button-balanced" ng-click="load()">Try Again</button>
+      <button ng-if="hasError" class="button-clear button-full button button-balanced" ng-click="load()">Try Again</button>
 
     <ion-list>
       <ion-item class="item-avatar" collection-repeat="speaker in speakers | filter:searchSpeakers"

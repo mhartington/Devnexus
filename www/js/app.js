@@ -96,6 +96,15 @@ angular.module('devnexus', [
         controller: 'MapCtrl'
       }
     }
+  })
+
+  .state('menu.venue', {
+    url: '/venue',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/venue.html'
+      }
+    }
   });
 
   $urlRouterProvider.otherwise('/menu/sessions');

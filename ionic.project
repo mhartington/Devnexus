@@ -1,6 +1,6 @@
 {
   "name": "DevNexus",
-  "app_id": "",
+  "app_id": "5bb9f68c",
   "gulpStartupTasks": [
     "sass",
     "watch"
